@@ -4,7 +4,7 @@ using Unity.Transforms;
 
 public class MovePlayer : ComponentSystem
 {
-//Component System for single threading and System base for multithreading
+//ComponentSystem for single threading and SystemBase for multithreading
     protected override void OnUpdate()
     {
         //This code will apply on all the entities that have PlayerPosition and Translation , component attached to them
