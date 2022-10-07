@@ -1,0 +1,18 @@
+using Unity.Entities;
+using Unity.Mathematics;
+using Unity.Transforms;
+
+public class MovePlayer : ComponentSystem
+{
+    protected override void OnUpdate()
+    {
+        //This code will apply on all the entities that have PlayerPosition and Translation , component attached to them
+        //No need to attach it with any prefab, gameobject, entity.
+        Entities.ForEach((ref PlayerPosition position,ref Translation translation) =>
+        {
+            translation.Value = new float3(position.playerPositionX, position.playerPositionY,
+                (float)(position.playerPositionZ + 1 * Time.ElapsedTime));
+
+        });
+    }
+}
