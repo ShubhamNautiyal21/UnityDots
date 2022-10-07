@@ -1,0 +1,77 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using Unity.Collections;
+using Unity.Jobs;
+using Unity.Entities;
+using Unity.Mathematics;
+using Unity.Transforms;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class GameManager : MonoBehaviour
+{
+    [SerializeField] private GameObject gameObject;
+    [SerializeField] private Text text; 
+
+
+    public enum InstantiationType
+    {
+        NORMAL,
+        DOTS
+    }
+
+    public InstantiationType thisType = InstantiationType.NORMAL;
+
+    private int _objectsCount=0;
+    
+
+    private World defaultWorld;
+    private Entity entityPrefab;
+    private EntityManager entityManager;
+
+    private void Start()
+    {
+        defaultWorld = World.DefaultGameObjectInjectionWorld;
+        entityManager = defaultWorld.EntityManager;
+
+        GameObjectConversionSettings settings = GameObjectConversionSettings.FromWorld(defaultWorld, null);
+        entityPrefab = GameObjectConversionUtility.ConvertGameObjectHierarchy(gameObject, settings);
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            for (int i = 0; i < 50; i++)
+            {
+                for (int j = 0; j < 50; j++)
+                {
+                    this._objectsCount += 1;
+                    this.text.text = _objectsCount.ToString();
+
+                    if (thisType == InstantiationType.NORMAL)
+                    {
+                        Instantiate(gameObject);
+                    }
+                    else
+                    {
+                        DotsIns(new float3(i, j, 0), 0);
+                    }
+
+                    
+                }
+            }
+        }
+    }
+
+
+    void DotsIns(float3 position, float gap)
+    {
+        Entity entity = entityManager.Instantiate(entityPrefab);
+        entityManager.SetComponentData(entity, new Translation
+        {
+            Value = new float3(position.x + gap, position.y + gap, position.z)
+        });
+    }
+}
