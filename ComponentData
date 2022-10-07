@@ -5,5 +5,7 @@ using Unity.Mathematics;
 //This header/decorative file is used to make this script behave as a monobehaviour
 public struct PlayerPosition : IComponentData
 {
-    public float3 playerPosition;
+    public float playerPositionX;
+    public float playerPositionY;
+    public float playerPositionZ;
 }
