@@ -2,6 +2,8 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 
+[AlwaysSynchronizeSystem] 
+//This header file is used with SystemBase and run()
 public class MovePlayer : ComponentSystem
 {
     //ComponentSystem for single threading and SystemBase for multithreading
@@ -9,7 +11,9 @@ public class MovePlayer : ComponentSystem
     {
         //This code will apply on all the entities that have PlayerPosition and Translation , component attached to them
         //No need to attach it with any prefab, gameobject, entity.
-        Entities.ForEach((ref PlayerPosition position,ref Translation translation) =>
+        Entities
+        .WithAll<AnyComponent>()//For identification
+        .ForEach((ref PlayerPosition position,ref Translation translation) =>
         {
             translation.Value = new float3(position.playerPositionX, position.playerPositionY,
                 (float)(position.playerPositionZ + 1 * Time.ElapsedTime));
