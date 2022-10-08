@@ -3,7 +3,7 @@ using Unity.Mathematics;
 using Unity.Transforms;
 
 [AlwaysSynchronizeSystem] 
-//This header file is used with SystemBase and run()
+//This header file is used with SystemBase and Run()
 public class MovePlayer : ComponentSystem
 {
     //ComponentSystem for single threading and SystemBase for multithreading
