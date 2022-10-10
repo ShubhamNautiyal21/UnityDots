@@ -12,7 +12,7 @@ public class MovePlayer : ComponentSystem
         //This code will apply on all the entities that have PlayerPosition and Translation , component attached to them
         //No need to attach it with any prefab, gameobject, entity.
         Entities
-        .WithAll<AnyComponent>()//For identification
+        .WithAll<AnyComponent>()//Filters
         .WithAny<AnyComponent>()
         .WithNone<AnyComponent>()
         .ForEach((ref PlayerPosition position,ref Translation translation) =>
