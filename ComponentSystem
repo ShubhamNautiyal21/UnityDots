@@ -13,6 +13,8 @@ public class MovePlayer : ComponentSystem
         //No need to attach it with any prefab, gameobject, entity.
         Entities
         .WithAll<AnyComponent>()//For identification
+        .WithAny<AnyComponent>()
+        .WithNone<AnyComponent>()
         .ForEach((ref PlayerPosition position,ref Translation translation) =>
         {
             translation.Value = new float3(position.playerPositionX, position.playerPositionY,
