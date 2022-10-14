@@ -1,0 +1,29 @@
+using Unity.Burst;
+using Unity.Collections;
+using Unity.Entities;
+using Unity.Jobs;
+using Unity.Mathematics;
+using Unity.Transforms;
+using UnityEngine;
+
+public class TestingForSystem : SystemBase
+{
+    
+    protected override void OnUpdate()
+    {
+        ComponentDataFromEntity<MainDataComponent> mainDataComponents;
+        mainDataComponents = GetComponentDataFromEntity<MainDataComponent>(true);
+        
+
+        Entities.ForEach((in TestingForComponent test) => {
+
+            if (mainDataComponents.Exists(test.referenceEnrity))
+            {
+                int value = mainDataComponents[test.referenceEnrity].value;
+               
+                Debug.Log($"This is the data value::: {value}");
+            }
+
+        }).Run();
+    }
+}
