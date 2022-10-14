@@ -1,0 +1,43 @@
+using Unity.Burst;
+using Unity.Collections;
+using Unity.Entities;
+using Unity.Jobs;
+using Unity.Mathematics;
+using Unity.Transforms;
+
+[UpdateBefore(typeof(TestingForSystem))]
+//[UpdateAfter(typeof(TestingForSystem))]
+//[UpdateInGroup(typeof())]
+public class SearchingForEntitySystem : SystemBase
+{
+    EntityQuery entityQuery;
+    protected override void OnStartRunning()
+    {
+        base.OnStartRunning();
+        Entity reference;
+
+        //EntityQuery entityQuery = GetEntityQuery(typeof(MainDataComponent));
+        entityQuery = GetEntityQuery(ComponentType.ReadOnly<MainDataComponent>());
+
+       // reference = entityQuery.ToEntityArray(Allocator.TempJob)[0];
+        reference = entityQuery.GetSingletonEntity();
+       
+        Entities.ForEach((ref TestingForComponent test) => {
+            if (reference != Entity.Null)
+            { 
+                test.referenceEnrity = reference;
+                
+            } 
+           
+        }).Run();
+        
+        
+    }
+   
+    protected override void OnUpdate()
+    {
+
+        
+
+    }
+}
